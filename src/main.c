@@ -3,9 +3,10 @@
 
 int main(void)
 {
+        initHashColors();
         printf("\e[31mLol\e[0m\n");
         image_t img;
-        imgLoadFromFile(&img, "data/yoshi.png");
+        imgLoadFromFile(&img, "data/test.png");
         uint32_t w = 0;
         for (uint32_t i = 0; i < img.width*img.height; i++) {
                 if (img.pixels[i].a == 0) {
@@ -28,6 +29,7 @@ int main(void)
                 }
         }
         imgFree(&img);
+        freeHashColors();
         return 0;
 }
 

@@ -1,6 +1,14 @@
 #include "image.h"
 #include "stb_image.h"
+#include "khash.h"
 #include <stdlib.h>
+
+#define RGB2X(r,g,b) (((r) << 16) & ((g) << 8) & (b))
+#define X2R(x) (((x) & 0xff0000) >> 16)
+#define X2G(x) (((x) & 0xff00) >> 8)
+#define X2B(x) ((x) & 0xff)
+
+void convertColor(color_t *col);
 
 void imgLoadFromFile(image_t *img, const char* file)
 {
@@ -22,6 +30,7 @@ void imgLoadFromFile(image_t *img, const char* file)
                         img->pixels[j].g = ptr[i+1];
                         img->pixels[j].b = ptr[i+2];
                         img->pixels[j].a = ptr[i+3];
+                        convertColor(&(img->pixels[i]));
                 }
 
                 stbi_image_free(ptr);
@@ -40,6 +49,25 @@ void imgFree(image_t *img)
 // First convert to XYZ, then to *L*a*b
 // finnally find the closest color in the map and
 // store it
+KHASH_MAP_INIT_INT(uint32_t, uint32_t)
+khash_t(uint32_t) *hash_colors;
+void initHashColors()
+{
+        hash_colors = kh_init(uint32_t);
+        int ret;
+        khiter_t k;
+        for (int i = 0; i < 247; i++) {
+                k = kh_put(uint32_t, hash_colors, color_map[i], &ret);
+                /*if (!ret) kh_del(uint32_t, hash_colors, k);*/
+                kh_value(hash_colors, k) = color_map[i];
+        }
+}
+
+void freeHashColors()
+{
+        kh_destroy(uint32_t, hash_colors);
+}
+
 void convertColor(color_t *col) {
         if (col->a == 0)
                 return; // we don't care about this color
@@ -52,5 +80,15 @@ void convertColor(color_t *col) {
         y = 0.299*r + 0.587*g + 0.114*b;
         u = -0.14713*r + -0.28886*g + 0.436*b;
         v = 0.615*r + -0.51499*g + -0.10001*b;
+
+        khiter_t k;
+        k = kh_get(uint32_t, hash_colors, RGB2X(col->r, col->g, col->b));
+        if (k == kh_end(hash_colors)) { // it doesn't exist
+        } else {
+                uint32_t xcol = kh_value(hash_colors, k);
+                col->r = X2R(xcol);
+                col->g = X2G(xcol);
+                col->b = X2B(xcol);
+        }
 }
 

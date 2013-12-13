@@ -8,3 +8,7 @@ typedef struct {
 
 void imgLoadFromFile(image_t *img, const char* file);
 void imgFree(image_t *img);
+
+void initHashColors();
+void freeHashColors();
+
