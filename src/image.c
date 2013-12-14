@@ -25,7 +25,7 @@ void imgLoadFromFile(image_t *img, const char* file)
                         img->pixels[j].g = ptr[i+1];
                         img->pixels[j].b = ptr[i+2];
                         img->pixels[j].a = ptr[i+3];
-                        /*convertColor(&(img->pixels[i]));*/
+                        convertColor(&(img->pixels[i]));
                 }
 
                 stbi_image_free(ptr);

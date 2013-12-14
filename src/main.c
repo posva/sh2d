@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "image.h"
 
 int main(void)
@@ -8,7 +9,7 @@ int main(void)
         image_t img;
         const char file[] = "data/yoshi.png";
         imgLoadFromFile(&img, file);
-        /*printf("Loaded %s: %ux%u\n", file, img.width, img.height);*/
+        printf("Loaded %s: %ux%u. Console width: %u\n", file, img.width, img.height, terminalGetColumns());
         uint32_t w = 0;
         for (uint32_t i = 0; i < img.width*img.height; i++) {
                 if (img.pixels[i].a == 0) {
