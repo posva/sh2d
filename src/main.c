@@ -2,12 +2,17 @@
 #include <stdlib.h>
 #include "sh_image.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
         initHashColors();
-        /*printf("\e[31mLol\e[0m\n");*/
         image_t img;
-        const char file[] = "data/grump.png";
+        char* file;
+        if (argc > 1)
+                file = argv[1];
+        else {
+                perror("No args");
+                return 1;
+        }
         imgLoadFromFile(&img, file);
         printf("Loaded %s: %ux%u. Console width: %u\n", file, img.width, img.height, terminalGetColumns());
         uint32_t w = 0;

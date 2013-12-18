@@ -1,5 +1,6 @@
 #include "sh_color.h"
 #include "sh_utils.h"
+#include <math.h>
 #include "khash.h"
 #ifdef WINDOWS
 #include <windows.h>
@@ -51,7 +52,7 @@ void initHashColors()
         int ret;
         khiter_t k;
         color_t rgb;
-        for (int i = 0; i < 247; i++) {
+        for (int i = 0; i < N_COLORS; i++) {
                 k = kh_put(uint32_t, hash_colors, color_map[i], &ret);
                 /*if (!ret) kh_del(uint32_t, hash_colors, k);*/
                 kh_value(hash_colors, k) = color_map[i];
@@ -67,22 +68,44 @@ void freeHashColors()
         kh_destroy(uint32_t, hash_colors);
 }
 
+uint32_t find_nearest_color(color_t* col)
+{
+        color_yuv_t yuv;
+        rgb2yuv(col, &yuv);
+        uint32_t b = 0;
+        float dist = INFINITY, tmp;
+        for (uint32_t i = 1; i < N_COLORS; ++i) {
+                tmp = col_yuv_distance(&yuv, &yuv_color_map[i]);
+                if (tmp < dist) {
+                        dist = tmp;
+                        b = i;
+                }
+        }
+        return b;
+}
+
 void convert_color(color_t *col) {
         if (col->a == 0)
                 return; // we don't care about this color
-        int32_t r = col->r, g = col->g, b = col->b;
+        /*int32_t r = col->r, g = col->g, b = col->b;*/
         /*double x,y,z;*/
         /*x = 0.412453*r + 0.357580*g + 0.180423*b;*/
         /*y = 0.212671*r + 0.715160*g + 0.072169*b;*/
         /*z = 0.019334*r + 0.119193*g + 0.950227*b;*/
-        double y,u,v;
-        y = 0.299*r + 0.587*g + 0.114*b;
-        u = -0.14713*r + -0.28886*g + 0.436*b;
-        v = 0.615*r + -0.51499*g + -0.10001*b;
 
         khiter_t k;
         k = kh_get(uint32_t, hash_colors, RGB2X(col->r, col->g, col->b));
         if (k == kh_end(hash_colors)) { // it doesn't exist
+                uint32_t in = find_nearest_color(col);
+
+                int ret;
+                khiter_t k;
+                k = kh_put(uint32_t, hash_colors, RGB2X(col->r, col->g, col->b), &ret);
+                /*if (!ret) kh_del(uint32_t, hash_colors, k);*/
+                kh_value(hash_colors, k) = color_map[in];
+                col->r = X2R(color_map[in]);
+                col->g = X2G(color_map[in]);
+                col->b = X2B(color_map[in]);
         } else {
                 uint32_t xcol = kh_value(hash_colors, k);
                 col->r = X2R(xcol);
@@ -90,3 +113,4 @@ void convert_color(color_t *col) {
                 col->b = X2B(xcol);
         }
 }
+

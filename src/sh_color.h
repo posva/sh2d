@@ -23,9 +23,10 @@ typedef struct {
 } color_yuv_t;
 
 // rgb colors
-uint32_t color_map[247];
+#define N_COLORS 247
+uint32_t color_map[N_COLORS];
 // yuv equivalents
-color_yuv_t yuv_color_map[247];
+color_yuv_t yuv_color_map[N_COLORS];
 
 uint32_t terminalGetColumns();
 
