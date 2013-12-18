@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "image.h"
+#include "sh_image.h"
 
 int main(void)
 {
         initHashColors();
         /*printf("\e[31mLol\e[0m\n");*/
         image_t img;
-        const char file[] = "data/yoshi.png";
+        const char file[] = "data/grump.png";
         imgLoadFromFile(&img, file);
         printf("Loaded %s: %ux%u. Console width: %u\n", file, img.width, img.height, terminalGetColumns());
         uint32_t w = 0;
