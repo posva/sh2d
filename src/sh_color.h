@@ -10,10 +10,6 @@
 
 #include <stdint.h>
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-#define WINDOWS
-#endif
-
 typedef struct {
         uint8_t r, g, b, a;
 } color_t;
@@ -28,7 +24,6 @@ uint32_t color_map[N_COLORS];
 // yuv equivalents
 color_yuv_t yuv_color_map[N_COLORS];
 
-uint32_t terminalGetColumns();
 
 void rgb2yuv(const color_t* rgb, color_yuv_t* yuv);
 
@@ -36,5 +31,9 @@ void rgb2yuv(const color_t* rgb, color_yuv_t* yuv);
 float col_yuv_distance(const color_yuv_t* a, const color_yuv_t* b);
 
 void convert_color(color_t *col);
+
+void init_hash_colors();
+void free_hash_colors();
+
 
 #endif

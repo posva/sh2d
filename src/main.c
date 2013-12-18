@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sh_image.h"
+#include "sh_utils.h"
 
 int main(int argc, char *argv[])
 {
-        initHashColors();
+        init_hash_colors();
         image_t img;
         char* file;
         if (argc > 1)
@@ -13,8 +14,13 @@ int main(int argc, char *argv[])
                 perror("No args");
                 return 1;
         }
-        imgLoadFromFile(&img, file);
-        printf("Loaded %s: %ux%u. Console width: %u\n", file, img.width, img.height, terminalGetColumns());
+        img_load_from_file(&img, file);
+        uint32_t cols = terminal_columns()/2.f;
+        if (cols < img.width) {
+                float sc = cols/(float)img.width;
+                img_resize(&img, sc, sc);
+        }
+        printf("Loaded %s: %ux%u. Console width: %u\n", file, img.width, img.height, cols);
         uint32_t w = 0;
         for (uint32_t i = 0; i < img.width*img.height; i++) {
                 if (img.pixels[i].a == 0) {
@@ -37,8 +43,8 @@ int main(int argc, char *argv[])
                         printf("\e[0m\n");
                 }
         }
-        imgFree(&img);
-        freeHashColors();
+        img_free(&img);
+        free_hash_colors();
         return 0;
 }
 

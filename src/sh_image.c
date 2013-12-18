@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 
-void imgLoadFromFile(image_t *img, const char* file)
+void img_load_from_file(image_t *img, const char* file)
 {
         int channels, w, h;
         unsigned char* ptr = stbi_load(file, &w, &h, &channels, STBI_rgb_alpha);
@@ -32,10 +32,48 @@ void imgLoadFromFile(image_t *img, const char* file)
         }
 }
 
-void imgFree(image_t *img)
+void img_free(image_t *img)
 {
         free(img->pixels);
 }
 
+void img_resize(image_t *img, float wsc, float hsc)
+{
+        color_t *pix = NULL;
+        uint32_t w = img->width*wsc,
+                 h = img->height*hsc,
+                 wh;
+        wsc = 1.f/wsc;
+        hsc = 1.f/hsc;
+        int32_t wsc_i = wsc,
+                hsc_i = hsc;
+        wh = hsc_i*wsc_i;
 
+        if (!(pix = malloc(sizeof(color_t)*w*h))) {
+                perror("malloc error\n");
+                exit(1);
+        }
+        for (uint32_t y = 0; y < h; ++y) {
+                for (uint32_t x = 0; x < w; ++x) {
+                        uint32_t r = 0, g = 0, b = 0, a = 0,
+                                 srcx = x*wsc,
+                                 srcy = y*hsc;
+                        for (int32_t yi = 0; yi < hsc_i; ++yi)
+                                for (int32_t xi = 0; xi < wsc_i; ++xi) {
+                                        r += img->pixels[srcx + xi +(srcy+yi)*img->width].r;
+                                        g += img->pixels[srcx + xi +(srcy+yi)*img->width].g;
+                                        b += img->pixels[srcx + xi +(srcy+yi)*img->width].b;
+                                        a += img->pixels[srcx + xi +(srcy+yi)*img->width].a;
+                                }
+                        pix[x+y*w].r = r/wh;
+                        pix[x+y*w].g = g/wh;
+                        pix[x+y*w].b = b/wh;
+                        pix[x+y*w].a = a/wh;
+                }
+        }
+        free(img->pixels);
+        img->pixels = pix;
+        img->width = w;
+        img->height = h;
+}
 

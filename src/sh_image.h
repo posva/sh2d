@@ -16,11 +16,9 @@ typedef struct {
         uint32_t width, height;
 } image_t;
 
-void imgLoadFromFile(image_t *img, const char* file);
-void imgFree(image_t *img);
-
-void initHashColors();
-void freeHashColors();
+void img_load_from_file(image_t *img, const char* file);
+void img_free(image_t *img);
+void img_resize(image_t *img, float wsc, float hsc);
 
 
 #endif
