@@ -8,4 +8,6 @@ if [ "`uname -s`" = "Darwin" ]; then
 	./configure.sh -aD -s src -o obj -b bin -c "xcrun clang" -O "-Wall -Wextra" -Isrc -L/usr/local/lib -e c -E sh2d -M Makefile -l "-lm"
 elif [ "`uname -s`" = "Linux" ]; then
 	./configure.sh -aD -s src -o obj -b bin -c "gcc" -O "-Wall -Wextra -std=c99" -Isrc -L/usr/local/lib -e c -E sh2d -M Makefile -l "-lm"
+else
+	./configure.sh -aD -s src -o obj -b bin -c "gcc" -O "-Wall -Wextra -std=c99" -Isrc -L/usr/local/lib -e c -E sh2d -M Makefile -l "-lm"
 fi
