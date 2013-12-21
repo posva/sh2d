@@ -20,14 +20,19 @@
  * @brief Structure defining a color in RGB format
  */
 typedef struct {
-        uint8_t r, g, b, a;
+        uint8_t r, ///< Red
+                g, ///< Green
+                b, ///< Blue
+                a; ///< Alpha
 } color_t;
 
 /**
  * @brief Structure defining a color in YUV format
  */
 typedef struct {
-        float y, u, v;
+        float y, ///< Y'
+              u, ///< u
+              v; ///< v
 } color_yuv_t;
 
 #define N_COLORS 247 ///< Number of colors in terminal
@@ -57,6 +62,7 @@ float col_yuv_distance(const color_yuv_t *a, const color_yuv_t *b);
  * @brief Convert a color to its nearest equivalent in the terminal palette
  *
  * @param col color to convert
+ * @param out returned color
  */
 void convert_color(color_t *col, color_t *out);
 

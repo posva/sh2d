@@ -44,7 +44,8 @@
  */
 typedef struct {
         color_t *pixels; ///< 1 dim pixels
-        uint32_t width, height; ///< dimensions
+        uint32_t width, ///< Width of the image
+                 height; ///< Height of the image
 } image_t;
 
 /**
