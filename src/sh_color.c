@@ -7,7 +7,7 @@ uint32_t color_map[] = { 0x000000, 0x00005F, 0x000080, 0x000087, 0x0000AF, 0x000
 };
 
 
-void rgb2yuv(const color_t* rgb, color_yuv_t* yuv)
+void rgb2yuv(const color_t *rgb, color_yuv_t *yuv)
 {
         float r = rgb->r/255.f, g = rgb->g/255.f, b = rgb->b/255.f;
         yuv->y = .299f*r + .587f*g + .114f*b;
@@ -15,7 +15,7 @@ void rgb2yuv(const color_t* rgb, color_yuv_t* yuv)
         yuv->v = .615f*r + -.51499f*g + -.10001f*b;
 }
 
-float col_yuv_distance(const color_yuv_t* a, const color_yuv_t* b)
+float col_yuv_distance(const color_yuv_t *a, const color_yuv_t *b)
 {
         return SQUARED(b->y - a->y) + SQUARED(b->u - a->u) + SQUARED(b->v - a->v);
 }
@@ -49,7 +49,7 @@ void free_hash_colors()
         kh_destroy(uint32_t, hash_colors);
 }
 
-uint32_t find_nearest_color(color_t* col)
+uint32_t find_nearest_color(color_t *col)
 {
         color_yuv_t yuv;
         rgb2yuv(col, &yuv);
@@ -65,7 +65,8 @@ uint32_t find_nearest_color(color_t* col)
         return b;
 }
 
-void convert_color(color_t *col) {
+void convert_color(color_t  *col, color_t *out)
+{
         if (col->a == 0)
                 return; // we don't care about this color
         /*int32_t r = col->r, g = col->g, b = col->b;*/
@@ -84,14 +85,14 @@ void convert_color(color_t *col) {
                 k = kh_put(uint32_t, hash_colors, RGB2X(col->r, col->g, col->b), &ret);
                 /*if (!ret) kh_del(uint32_t, hash_colors, k);*/
                 kh_value(hash_colors, k) = color_map[in];
-                col->r = X2R(color_map[in]);
-                col->g = X2G(color_map[in]);
-                col->b = X2B(color_map[in]);
+                out->r = X2R(color_map[in]);
+                out->g = X2G(color_map[in]);
+                out->b = X2B(color_map[in]);
         } else {
                 uint32_t xcol = kh_value(hash_colors, k);
-                col->r = X2R(xcol);
-                col->g = X2G(xcol);
-                col->b = X2B(xcol);
+                out->r = X2R(xcol);
+                out->g = X2G(xcol);
+                out->b = X2B(xcol);
         }
 }
 

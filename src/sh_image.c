@@ -23,13 +23,31 @@ void img_load_from_file(image_t *img, const char* file)
                         img->pixels[j].g = ptr[i+1];
                         img->pixels[j].b = ptr[i+2];
                         img->pixels[j].a = ptr[i+3];
-                        convert_color(&(img->pixels[j]));
                 }
 
                 stbi_image_free(ptr);
         } else {
                 perror("stb_image error");
         }
+}
+
+void img_copy(image_t* img, image_t *cpy)
+{
+        img->width = cpy->width;
+        img->height = cpy->height;
+        img->pixels = NULL;
+        if (!(img->pixels = malloc(sizeof(color_t)*img->width*img->height))) {
+                perror("malloc error");
+                exit(1);
+        }
+        for (uint32_t i = 0; i < img->width*img->height; ++i)
+                img->pixels[i] = cpy->pixels[i];
+}
+
+void img_convert_colors(image_t *img)
+{
+        for (int i = 0 ; i < img->width*img->height; i++)
+                convert_color(&(img->pixels[i]), &(img->pixels[i]));
 }
 
 void img_free(image_t *img)
