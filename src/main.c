@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
                 float sc = cols/(float)img.width;
                 img_resize(&img, sc, sc);
         }
+        img_convert_colors(&img);
         printf("Loaded %s: %ux%u. Console width: %u\n", file, img.width, img.height, cols);
         uint32_t w = 0;
         for (uint32_t i = 0; i < img.width*img.height; i++) {
