@@ -3,3 +3,4 @@ Makefile
 obj/
 data
 .ycm_extra_conf.pyc
+doc
