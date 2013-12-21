@@ -5,6 +5,13 @@
 # https://github.com/posva/InputManager
 
 CONF=../configure-script/configure.sh
+if [[ ! -x ${CONF} ]]; then
+  if [[ ! -x configure.sh ]]; then
+    wget -q -O configure.sh https://raw.github.com/posva/configure-script/master/configure.sh
+    chmod +x configure.sh
+  fi
+  CONF=./configure.sh
+fi
 
 if [ "`uname -s`" = "Darwin" ]; then
 	${CONF} $@ -aD -s src -o obj -b bin -c "xcrun clang" -O "-Wall -Wextra" -Isrc -L/usr/local/lib -e c -E sh2d -M Makefile -l "-lm"
