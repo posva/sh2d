@@ -46,7 +46,7 @@ void img_copy(image_t* img, image_t *cpy)
 
 void img_convert_colors(image_t *img)
 {
-        for (int i = 0 ; i < img->width*img->height; i++)
+        for (uint32_t i = 0 ; i < img->width*img->height; i++)
                 convert_color(&(img->pixels[i]), &(img->pixels[i]));
 }
 
