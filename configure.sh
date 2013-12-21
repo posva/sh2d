@@ -1,1 +1,0 @@
-../configure-script/configure.sh
