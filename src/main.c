@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
                 img_resize(&img, sc, sc);
         }
         img_convert_colors(&img);
-        printf("Loaded %s: %ux%u. Console width: %u\n", file, img.width, img.height, cols);
+        /*printf("Loaded %s: %ux%u. Console width: %u\n", file, img.width, img.height, cols);*/
         uint32_t w = 0;
         for (uint32_t i = 0; i < img.width*img.height; i++) {
                 if (img.pixels[i].a == 0) {
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
                 } else {
                         uint32_t col;
                         if (img.pixels[i].r == img.pixels[i].g && img.pixels[i].g == img.pixels[i].b)
-                                col = (uint32_t)(232.f + img.pixels[i].r*(23.f/255.f));
+                                col = 232 + (img.pixels[i].r*23)/255;
                         else
                                 col = (16 + ((img.pixels[i].r*5)/255)*36
                                                 + ((img.pixels[i].g*5)/255)*6
