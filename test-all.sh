@@ -1,3 +1,5 @@
 #! /bin/bash
 
-# TODO Unit tests
+for i in tests/*.sh ; do
+  ./$i
+done
