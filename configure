@@ -4,7 +4,7 @@
 # This one is what I use in my project InputManager:
 # https://github.com/posva/InputManager
 
-CONF=../configure-script/configure.sh
+CONF=~/configure-script/configure.sh
 if [[ ! -x ${CONF} ]]; then
   if [[ ! -x configure.sh ]]; then
     wget -q -O configure.sh https://raw.github.com/posva/configure-script/master/configure.sh
