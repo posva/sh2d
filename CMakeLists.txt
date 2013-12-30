@@ -43,3 +43,13 @@ target_link_libraries(catimg m)
 # tests
 enable_testing()
 add_test(tcatimg ${PROJECT_SOURCE_DIR}/tests/tcatimg.sh)
+
+# Doc
+
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+  add_custom_target(doc
+    ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    COMMENT "Generating API documentation with Doxygen" VERBATIM)
+endif(DOXYGEN_FOUND)
