@@ -3,7 +3,7 @@ project(sh2d)
 
 # set soem options
 #set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -Wextra -std=c99 -g")
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall -Wextra -Wno-self-assign -O2 -std=c99")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall -Wextra -O2 -std=c99")
 set(CMAKE_BUILD_TYPE Release)
 
 set(SRC ${PROJECT_SOURCE_DIR}/src)
