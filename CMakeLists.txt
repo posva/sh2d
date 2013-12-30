@@ -39,7 +39,8 @@ add_executable(
   )
 
 # libs
-set(CMAKE_EXE_LINKER_FLAGS "-lm")
+target_link_libraries(catimg m)
+target_link_libraries(sh2d m)
 
 # tests
 enable_testing()
