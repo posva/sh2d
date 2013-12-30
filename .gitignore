@@ -6,3 +6,8 @@ data
 doc
 colorsfromimg.txt
 tmp
+Testing/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
