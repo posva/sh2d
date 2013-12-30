@@ -2,20 +2,49 @@
 #include <stdlib.h>
 #include "sh_image.h"
 #include "sh_utils.h"
+#include <unistd.h>
+#define USAGE printf("Usage catimg [-h] [-w width] img\nBy default w is the terminal width")
+
+extern char *optarg;
+extern int optind;
+extern int optopt;
+extern int opterr;
+extern int optreset;
+
+int getopt(int argc, char * const argv[], const char *optstring);
 
 int main(int argc, char *argv[])
 {
         init_hash_colors();
         image_t img;
-        char* file;
+        char *file;
+        char *num;
+        int c;
+        opterr = 0;
+        uint32_t cols = terminal_columns() >> 1; // divided by 2 because of 2 chars
+
+        while ((c = getopt (argc, argv, "w:h")) != -1)
+                switch (c) {
+                        case 'w':
+                                cols = strtol(optarg, &num, 0) >> 1;
+                                break;
+                        case 'h':
+                                USAGE;
+                                exit(0);
+                        default:
+                                USAGE;
+                                exit(1);
+                                break;
+                }
+
         if (argc > 1)
-                file = argv[1];
+                file = argv[argc-1];
         else {
-                perror("No args");
-                return 1;
+                USAGE;
+                exit(1);
         }
+
         img_load_from_file(&img, file);
-        uint32_t cols = terminal_columns()/2.f;
         if (cols < img.width) {
                 float sc = cols/(float)img.width;
                 img_resize(&img, sc, sc);

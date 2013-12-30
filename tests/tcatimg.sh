@@ -22,7 +22,7 @@ EXC="./bin/catimg"
 if [[ ! -x $EXC ]]; then
     gtfo && exit 1
 fi
-if ! ${EXC} $IMG > tmp; then
+if ! ${EXC} -w 300 $IMG > tmp; then
   echo "Error running catimg"
   exit 1
 fi
