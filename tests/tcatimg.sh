@@ -30,12 +30,16 @@ echo "$IMG: ${W}x${H}"
 # Dimensions test
 pre_test "Lines..."
 if [[ ! `wc -l < tmp` -eq "$H" ]]; then
-  gtfo && exit 1
+  gtfo
+  echo "`wc -l < tmp` != $H"
+  exit 1
 fi
 ok_test
 pre_test "Columns..."
 if [[ ! `sed 's/\[[0-9][0-9;m]* */-/g' < tmp | head -n 1 | wc -c` -eq `expr $W + 2` ]]; then
-  gtfo && exit 1
+  gtfo
+  echo "`sed 's/\[[0-9][0-9;m]* */-/g' < tmp | head -n 1 | wc -c` != `expr $W + 2` "
+  exit 1
 fi
 ok_test
 
