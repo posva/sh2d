@@ -26,7 +26,6 @@ if ! ${EXC} -w 300 $IMG > tmp; then
   echo "Error running catimg"
   exit 1
 fi
-cat tmp
 W=`convert "$IMG" -print "%w\n" /dev/null`
 H=`convert "$IMG" -print "%h\n" /dev/null`
 echo "$IMG: ${W}x${H}"
