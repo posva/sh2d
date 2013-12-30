@@ -22,7 +22,11 @@ EXC="./bin/catimg"
 if [[ ! -x $EXC ]]; then
     gtfo && exit 1
 fi
-${EXC} $IMG > tmp
+if ! ${EXC} $IMG > tmp; then
+  echo "Error running catimg"
+  exit 1
+fi
+cat tmp
 W=`convert "$IMG" -print "%w\n" /dev/null`
 H=`convert "$IMG" -print "%h\n" /dev/null`
 echo "$IMG: ${W}x${H}"
