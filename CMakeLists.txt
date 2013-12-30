@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(sh2d)
 
 # set soem options
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -Wextra -std=c99")
+#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -Wextra -std=c99 -g")
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall -Wextra -O2 -std=c99")
 set(CMAKE_BUILD_TYPE Release)
 
