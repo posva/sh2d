@@ -8,7 +8,7 @@ The main purpose of this lib is to display graphics n the console handling all t
 ## Compilation
 To compile the project I suggest you to clone this repo: [configure-script](https://github.com/posva/configure-script) at your home. If you don't the `./configure` will download a copy of the script. To compile and test the project do:
 ```
-./configure
+cmake .
 make
 make test
 ```
