@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
         uint32_t w = 0;
         for (uint32_t i = 0; i < img.width*img.height; i++) {
                 if (img.pixels[i].a == 0) {
-                        printf("\e[0m  ");
+                        printf("\e[m  ");
                 } else {
                         uint32_t col;
                         if (img.pixels[i].r == img.pixels[i].g && img.pixels[i].g == img.pixels[i].b)
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
                 w++;
                 if (w >= img.width) {
                         w = 0;
-                        printf("\e[0m\n");
+                        printf("\e[m\n");
                 }
         }
         img_free(&img);
