@@ -39,7 +39,7 @@ if [[ ! `wc -l < tmp` -eq "$H" ]]; then
 fi
 ok_test
 pre_test "Columns..."
-if [[ ! `sed 's/\[[0-9][0-9;m]* */-/g' < tmp | head -n 1 | wc -c` -eq `expr $W + 2` ]]; then
+if [[ ! `sed 's/\[[0-9m][0-9;m]* */-/g' < tmp | head -n 1 | wc -c` -eq `expr $W + 2` ]]; then
   echo "`sed 's/\[[0-9][0-9;m]* */-/g' < tmp | head -n 1 | wc -c` != `expr $W + 2` "
   gtfo
   exit 1
