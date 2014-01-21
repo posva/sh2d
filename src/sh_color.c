@@ -96,3 +96,10 @@ void convert_color(color_t  *col, color_t *out)
         }
 }
 
+void col_cpy(const color_t *col, color_t *out)
+{
+        out->r = col->r;
+        out->g = col->g;
+        out->b = col->b;
+        out->a = col->a;
+}

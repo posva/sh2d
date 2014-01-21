@@ -1,6 +1,7 @@
 #include "sh_image.h"
 #include "stb_image.h"
 #include <stdlib.h>
+#include <assert.h>
 
 
 void img_load_from_file(image_t *img, const char* file)
@@ -29,6 +30,20 @@ void img_load_from_file(image_t *img, const char* file)
         } else {
                 perror("stb_image error");
         }
+}
+
+void img_create(image_t *img, uint32_t width, uint32_t height)
+{
+        if (!(img->pixels = malloc(sizeof(color_t)*width*height))) {
+                perror("malloc error\n");
+                exit(1);
+        }
+
+        // fill the array
+        for (uint32_t i = 0, j = 0; j < width*height; i += 4, j++) {
+                img->pixels[j].a = 0;
+        }
+
 }
 
 void img_copy(image_t* img, image_t *cpy)
@@ -95,3 +110,14 @@ void img_resize(image_t *img, float wsc, float hsc)
         img->height = h;
 }
 
+const color_t* img_get_pixel(image_t *img, uint32_t x, uint32_t y)
+{
+        assert(x<img->width && y<img->height);
+        return &img->pixels[x+y*img->width];
+}
+
+void img_set_pixel(image_t *img, uint32_t x, uint32_t y, const color_t *col)
+{
+        assert(x<img->width && y<img->height);
+        col_cpy(col, &img->pixels[x+y*img->width]);
+}

@@ -67,6 +67,14 @@ float col_yuv_distance(const color_yuv_t *a, const color_yuv_t *b);
 void convert_color(color_t *col, color_t *out);
 
 /**
+ * @brief Copy a color
+ *
+ * @param col color to copy
+ * @param out color where to copy
+ */
+void col_cpy(const color_t *col, color_t *out);
+
+/**
  * @brief Initialize the hastable for the colors
  */
 void init_hash_colors();
