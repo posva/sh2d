@@ -3,7 +3,7 @@
 #include "sh_image.h"
 #include "sh_utils.h"
 #include <unistd.h>
-#define USAGE printf("Usage catimg [-h] [-w width] img\nBy default w is the terminal width")
+#define USAGE printf("Usage catimg [-h] [-w width] img\nBy default w is the terminal width.\n")
 
 extern char *optarg;
 extern int optind;
