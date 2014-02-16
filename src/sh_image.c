@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 
-void img_load_from_file(image_t *img, const char* file)
+bool img_load_from_file(image_t *img, const char* file)
 {
         int channels, w, h;
         unsigned char* ptr = stbi_load(file, &w, &h, &channels, STBI_rgb_alpha);
@@ -26,8 +26,10 @@ void img_load_from_file(image_t *img, const char* file)
                 }
 
                 stbi_image_free(ptr);
+				return false;
         } else {
-                perror("stb_image error");
+			fprintf(stderr, "Error reading file %s\n", file);
+				return true;
         }
 }
 
