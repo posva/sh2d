@@ -15,6 +15,9 @@
  * @{
  */
 
+typedef struct {
+    image_t tx;
+} render_t;
 
 ///@}
 #endif
