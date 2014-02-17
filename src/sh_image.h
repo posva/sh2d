@@ -9,6 +9,7 @@
  ******************************************************************************/
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "sh_color.h"
 
 /**
@@ -53,8 +54,9 @@ typedef struct {
  *
  * @param img instance
  * @param file file to load
+ * @return true if error
  */
-void img_load_from_file(image_t *img, const char* file);
+bool img_load_from_file(image_t *img, const char* file);
 
 /**
  * @brief Init a transparent picture
